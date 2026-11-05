@@ -1,5 +1,7 @@
 # CMSC 170 - AI Project
 
+**Group Name:** AOA
+
 ## Group Members
 - Alde, Mark Kennard
 - Omamalin, Dexter
