@@ -1,2 +1,10 @@
 # cmsc170-ai-project
-CMSC 170 AI Project
+
+Members:
+Alde, Mark Kennard
+Omamalin, Dexter
+Austria, Lakeisha Mae
+
+Chosen Dataset with source: Pathfinding Benchmarks - https://www.movingai.com/benchmarks/
+
+Methods: BFS, DFS, A* search
