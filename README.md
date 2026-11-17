@@ -156,8 +156,8 @@ cmsc170-ai-project/
 │   └── figures/
 │
 ├── docs/
-│   ├── progress_reports/
-│   └── task_log.md
+│   ├── task_log.md
+│
 │
 ├── .gitignore
 └── README.md
