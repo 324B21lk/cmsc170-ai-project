@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="AOA's CMSC 170 AI project comparing BFS, DFS, and A* for grid-based pathfinding using Moving AI Dragon Age: Origins maps.">
+  <title>Comparing BFS, DFS, and A* | AOA · CMSC 170</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <div class="scroll-track" aria-hidden="true"><span id="scroll-progress"></span></div>
+
+  <header class="site-header" id="top">
+    <div class="header-inner">
+      <a href="#overview" class="identity" aria-label="Group AOA, back to overview">
+        <span class="identity-mark">AOA<span class="mark-dot">.</span></span>
+        <span class="identity-label">CMSC 170<br><small>AI PROJECT</small></span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#overview" class="nav-link current">Overview</a>
+        <a href="#problem" class="nav-link">Problem</a>
+        <a href="#dataset" class="nav-link">Dataset</a>
+        <a href="#methods" class="nav-link">Methods</a>
+      </nav>
+      <span class="header-note">INTRODUCTION TO ARTIFICIAL INTELLIGENCE</span>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="overview" aria-labelledby="hero-title">
+      <div class="hero-pattern" aria-hidden="true"></div>
+      <div class="container hero-layout">
+        <div class="hero-copy reveal">
+          <div class="eyebrow eyebrow-light"><span class="eyebrow-rule"></span> AOA · CMSC 170 PROJECT</div>
+          <h1 id="hero-title">Comparing <em>BFS, DFS, and A*</em> for Grid-Based Pathfinding</h1>
+          <p class="hero-lead">We compare how BFS, DFS, and A* find routes on the same maps and start–goal scenarios.</p>
+          <p class="hero-support">The maps are from the Dragon Age: Origins collection of the Moving AI Pathfinding Benchmarks.</p>
+          <div class="hero-actions">
+            <a class="link-button" href="https://github.com/324B21lk/cmsc170-ai-project" target="_blank" rel="noopener noreferrer">View GitHub repository <span aria-hidden="true">↗</span></a>
+            <a class="quiet-link" href="#dataset">See the dataset <span aria-hidden="true">↓</span></a>
+          </div>
+        </div>
+        <figure class="hero-map reveal">
+          <div class="hero-map-label"><span class="tiny-gold-line"></span> ACTUAL DATASET MAP</div>
+          <div class="hero-map-window">
+            <img src="images/arena2.png" alt="Actual arena2.map terrain from the Moving AI Dragon Age: Origins benchmark: pale traversable cells within dark blocked areas" width="1124" height="836" fetchpriority="high">
+          </div>
+          <figcaption><span><strong>arena2.map</strong> · Dragon Age: Origins</span><span>281 × 209 CELLS</span></figcaption>
+        </figure>
+      </div>
+      <div class="container hero-bottom">
+        <div class="hero-stat"><strong>03</strong><span>SEARCH ALGORITHMS</span></div>
+        <div class="hero-stat"><strong>03</strong><span>BENCHMARK MAPS</span></div>
+        <div class="hero-stat"><strong>330</strong><span>SELECTED SCENARIOS</span></div>
+        <span class="hero-bottom-note">All three algorithms use the same start–goal pairs.</span>
+      </div>
+    </section>
+
+    <section class="team-band" aria-label="Project group members">
+      <div class="container team-layout">
+        <div class="team-heading"><span class="gold-square" aria-hidden="true"></span><span>GROUP MEMBERS</span><strong>AOA</strong></div>
+        <div class="team-people">
+          <span>Alde, Mark Kennard</span>
+          <span>Omamalin, Dexter</span>
+          <span>Austria, Lakeisha Mae</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section problem-section" id="problem" aria-labelledby="problem-heading">
+      <div class="container">
+        <div class="section-intro reveal">
+          <span class="section-label"><span class="label-stroke"></span> THE PATHFINDING PROBLEM</span>
+          <h2 id="problem-heading">Finding Paths,<br><em>Comparing Methods</em></h2>
+          <p>In grid-based pathfinding, an algorithm must travel from a starting cell to a goal without leaving the map or crossing obstacles. Each map identifies which cells can be entered and which ones are blocked.</p>
+        </div>
+        <div class="problem-columns">
+          <article class="problem-article reveal">
+            <h3>What are we trying to solve?</h3>
+            <p>For each test case, our program is given a two-dimensional grid map, a starting cell, and a goal cell. The task is to find a valid path from the starting point to the destination while staying within the map boundaries and avoiding obstacles.</p>
+            <p>All three algorithms follow the same movement rules: they can move up, down, left, or right, but not diagonally. Each move has a cost of one unit, ensuring that BFS, DFS, and A* solve the same pathfinding problem under consistent conditions.</p>
+          </article>
+          <article class="problem-article reveal">
+            <h3>Why compare the three methods?</h3>
+            <p>Finding a path does not always mean finding the shortest route. Different search algorithms use different strategies, which can affect the path length, number of nodes explored, and execution time.</p>
+            <p>Pathfinding is used in GPS navigation, robotics, video games, and delivery systems, where finding efficient routes can save time and resources. Choosing<br>the right algorithm can therefore make a difference in real-world applications.</p>
+            <p>By testing BFS, DFS, and A* on the same maps and start–goal pairs, we can compare their performance and better understand how their search strategies affect the results.</p>
+          </article>
+        </div>
+        <div class="comparison-question reveal" role="note">
+          <div class="question-overline">WHAT WE WANT TO COMPARE</div>
+          <p>How do BFS, DFS, and A* differ in terms of <em>path length, nodes explored, and execution time?</em></p>
+          <div class="question-rule" aria-hidden="true"></div>
+        </div>
+        <div class="rules-row reveal" aria-label="Shared pathfinding rules">
+          <div class="rule"><span>Movement</span><strong>Up · Down · Left · Right</strong></div>
+          <div class="rule"><span>Step cost</span><strong>1 per move</strong></div>
+          <div class="rule"><span>Coordinates</span><strong>(row, column)</strong></div>
+          <div class="rule"><span>Terrain</span><strong>Walkable cells only</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dataset-section" id="dataset" aria-labelledby="dataset-heading">
+      <div class="dataset-intro">
+        <div class="container dataset-heading-row reveal">
+          <div>
+            <span class="section-label light"><span class="label-stroke"></span> THE BENCHMARK DATASET</span>
+            <h2 id="dataset-heading">Three DAO maps.<br><em>330 pathfinding scenarios.</em></h2>
+          </div>
+          <div class="dataset-intro-copy">
+            <p>For this project, we use the <strong>Dragon Age: Origins (DAO)</strong> map collection from the <a href="https://www.movingai.com/benchmarks/" target="_blank" rel="noopener noreferrer">Moving AI Pathfinding Benchmarks</a>. Its map files provide the environment; accompanying scenario files provide individual start–goal problems.</p>
+            <p>We selected three maps with different sizes and layouts, then prepared 330 scenarios to run through the same three algorithms.</p>
+          </div>
+        </div>
+        <div class="container map-gallery" aria-label="Maps from the actual DAO dataset">
+          <figure class="map-card reveal">
+            <div class="map-picture"><img src="images/arena.png" alt="Terrain layout of the actual 49 by 49 arena.map, with walkable cells shown light and blocked cells dark" width="980" height="980" loading="lazy"></div>
+            <figcaption><span class="map-card-name">arena.map</span><span class="map-meta">49 × 49 <span class="meta-dot">·</span> 130 selected scenarios</span></figcaption>
+          </figure>
+          <figure class="map-card reveal">
+            <div class="map-picture"><img src="images/arena2.png" alt="Terrain layout of the actual 281 by 209 arena2.map, with walkable cells shown light and blocked cells dark" width="1124" height="836" loading="lazy"></div>
+            <figcaption><span class="map-card-name">arena2.map</span><span class="map-meta">281 × 209 <span class="meta-dot">·</span> 100 selected scenarios</span></figcaption>
+          </figure>
+          <figure class="map-card reveal">
+            <div class="map-picture"><img src="images/brc000d.png" alt="Terrain layout of the actual 257 by 261 brc000d.map, with walkable cells shown light and blocked cells dark" width="1028" height="1044" loading="lazy"></div>
+            <figcaption><span class="map-card-name">brc000d.map</span><span class="map-meta">257 × 261 <span class="meta-dot">·</span> 100 selected scenarios</span></figcaption>
+          </figure>
+        </div>
+        <div class="container map-legend"><span class="legend-item"><i class="legend-swatch walkable"></i> Walkable terrain</span><span class="legend-item"><i class="legend-swatch blocked"></i> Blocked terrain</span><span class="legend-note">Visualizations generated directly from the project's original .map files.</span></div>
+      </div>
+      <div class="container dataset-details">
+        <div class="dataset-details-head reveal">
+          <div><span class="section-label"><span class="label-stroke"></span> SIZE & STRUCTURE</span><h3>Three maps and 330 start–goal scenarios.</h3></div>
+          <p>Each scenario is a separate pathfinding problem. We keep the maps in their original dimensions, rather than resizing the terrain to force different grid shapes.</p>
+        </div>
+        <p class="table-scroll-note">Swipe horizontally to view the complete table.</p>
+        <div class="table-wrap reveal">
+          <table>
+            <caption>Selected Dragon Age: Origins benchmark maps and scenarios</caption>
+            <thead><tr><th scope="col">Map file</th><th scope="col">Dimensions (W × H)</th><th scope="col">Available valid scenarios</th><th scope="col">Selected scenarios</th></tr></thead>
+            <tbody>
+              <tr><th scope="row"><code>arena.map</code></th><td>49 × 49</td><td>130</td><td>130</td></tr>
+              <tr><th scope="row"><code>arena2.map</code></th><td>281 × 209</td><td>910</td><td>100</td></tr>
+              <tr><th scope="row"><code>brc000d.map</code></th><td>257 × 261</td><td>850</td><td>100</td></tr>
+            </tbody>
+            <tfoot><tr><th scope="row">Total</th><td>3 maps</td><td>1,890</td><td>330</td></tr></tfoot>
+          </table>
+        </div>
+        <div class="dataset-file-grid reveal">
+          <article class="file-explanation">
+            <span class="tiny-heading">INPUT FILES</span>
+            <h4><code>.map</code> — terrain</h4>
+            <p>The map header specifies the grid type, height, and width. After the <code>map</code> line, each character describes one cell. The loader reads these rows into a two-dimensional Python list.</p>
+          </article>
+          <article class="file-explanation">
+            <span class="tiny-heading">SEARCH INSTANCES</span>
+            <h4><code>.scen</code> — scenarios</h4>
+            <p>Each record identifies a map, its dimensions, a bucket, start and goal coordinates, and a reference path length. The loader converts the file's <code>(x, y)</code> coordinates to <code>(row, column)</code> for grid indexing.</p>
+          </article>
+          <article class="terrain-explanation">
+            <span class="tiny-heading">TERRAIN RULES</span>
+            <div class="terrain-row"><span class="terrain-chip passable-chip"><code>.</code> <code>G</code></span><span>Traversable</span></div>
+            <div class="terrain-row"><span class="terrain-chip blocked-chip"><code>@</code> <code>O</code> <code>T</code></span><span>Blocked</span></div>
+            <div class="terrain-row"><span class="terrain-chip special-chip"><code>S</code> <code>W</code></span><span>Recognized as special terrain, not traversed by the search methods</span></div>
+          </article>
+        </div>
+        <div class="preprocessing reveal">
+          <div class="preprocess-heading">
+            <span class="section-label"><span class="label-stroke"></span> DATA PREPARATION</span>
+            <h3>From benchmark files to usable scenarios</h3>
+            <p>The preprocessing follows the group's actual <code>dataset_loader.py</code> rather than generating new routes or modifying the original terrain.</p>
+          </div>
+          <ol class="process-list">
+            <li><span class="process-count">01</span><div><h4>Load the original maps</h4><p>Read the file headers and ASCII grids; verify that the number and width of rows match the declared dimensions.</p></div></li>
+            <li><span class="process-count">02</span><div><h4>Read and check scenarios</h4><p>Parse the scenario fields and verify the corresponding map, grid dimensions, coordinate boundaries, and blocked start or goal cells.</p></div></li>
+            <li><span class="process-count">03</span><div><h4>Remove repeated start–goal pairs</h4><p>Keep one instance for each unique combination of map name, starting coordinate, and goal coordinate.</p></div></li>
+            <li><span class="process-count">04</span><div><h4>Choose a reproducible subset</h4><p>Use bucket-based selection with seed <code>170</code>: 130 scenarios from <code>arena</code>, 100 from <code>arena2</code>, and 100 from <code>brc000d</code>.</p></div></li>
+          </ol>
+        </div>
+        <aside class="reference-note reveal"><span>ABOUT THE PROVIDED DISTANCES</span><p>The DAO scenario files contain reference path lengths for the benchmark's octile movement rules. Because our implementations allow only four directions, we calculate path lengths from the routes returned by our own algorithms instead of using the provided values as four-directional answers.</p></aside>
+      </div>
+    </section>
+
+    <section class="section methods-section" id="methods" aria-labelledby="methods-heading">
+      <div class="container">
+        <div class="methods-intro reveal">
+          <div><span class="section-label"><span class="label-stroke"></span> THE SEARCH METHODS</span><h2 id="methods-heading">Three strategies.<br><em>One set of rules.</em></h2></div>
+          <p>Each method takes the same input: a grid, a start position, and a goal position. What changes is how it chooses the next cell to explore. All three record parents to reconstruct a path and return success, path, path length, explored-node count, and execution time.</p>
+        </div>
+        <article class="method-entry reveal" aria-labelledby="bfs-heading">
+          <div class="method-titleblock"><div class="method-numeral">BFS</div><span class="method-type">UNINFORMED SEARCH · LEVEL BY LEVEL</span><h3 id="bfs-heading">Breadth-First <em>Search</em></h3><div class="method-meta"><span>Queue</span><span>First in, first out</span></div></div>
+          <div class="method-body"><p>BFS starts at the given position and explores nearby cells before moving farther away. The implementation uses Python's <code>deque</code> as a queue. Each valid walkable neighbor is marked visited as soon as it is added, preventing the same cell from entering the queue more than once.</p><p>As BFS visits new cells, it records which earlier cell led to each one. When the goal is reached, those parent links are followed backward and reversed to produce the route from start to goal. Because every allowed move has the same cost, the first route BFS finds to the goal is a shortest one.</p>
+            <div class="method-insight"><span class="insight-label">IN THE CODE · <code>bfs.py</code></span><pre><code>queue = deque([start])
+current = queue.popleft()</code></pre><p>Expand the earliest queued position, then append its unvisited neighbors.</p></div>
+          </div>
+        </article>
+        <article class="method-entry reveal" aria-labelledby="dfs-heading">
+          <div class="method-titleblock"><div class="method-numeral">DFS</div><span class="method-type">UNINFORMED SEARCH · DEEP EXPLORATION</span><h3 id="dfs-heading">Depth-First <em>Search</em></h3><div class="method-meta"><span>Stack</span><span>Last in, first out</span></div></div>
+          <div class="method-body"><p>DFS follows one branch of the search space as far as it can before trying alternatives. Our version uses a Python list as a stack. Each entry stores a position and the cell that led to it; <code>pop()</code> removes the most recently added entry. A position is marked visited when it is removed from the stack, and already visited entries are skipped.</p><p>When DFS reaches the goal, it traces recorded parents to recover the route. It can find a valid solution, but it does not promise the shortest one: a direction chosen early in the search can lead to a long detour, even if the goal is nearby.</p>
+            <div class="method-insight"><span class="insight-label">IN THE CODE · <code>dfs.py</code></span><pre><code>stack = [(start, None)]
+current, previous = stack.pop()</code></pre><p>Follow the most recently added position, while skipping cells visited earlier.</p></div>
+          </div>
+        </article>
+        <article class="method-entry reveal" aria-labelledby="astar-heading">
+          <div class="method-titleblock"><div class="method-numeral astar-numeral">A*</div><span class="method-type">INFORMED SEARCH · HEURISTIC GUIDANCE</span><h3 id="astar-heading">A* <em>Search</em></h3><div class="method-meta"><span>Priority queue</span><span>Lowest estimated total cost</span></div></div>
+          <div class="method-body"><p>A* ranks candidate positions using two quantities: the cost already spent reaching a cell and an estimate of the remaining distance to the goal. Our implementation uses <code>heapq</code> to choose the lowest-priority entry, stores the best known cost in <code>g_scores</code>, and updates parents whenever a cheaper route to a position is found.</p><p>For this grid, the heuristic is Manhattan distance which is the absolute difference between the row coordinates plus the absolute difference between the columns. Because movement is restricted to four directions with cost 1 per step, this estimate does not exceed the true remaining cost. Our A* implementation can therefore find shortest paths under these rules.</p>
+            <div class="formula-card"><span>PRIORITY CALCULATION</span><strong><i>f(n)</i> = <i>g(n)</i> + <i>h(n)</i></strong><div class="formula-terms"><span><b>g(n)</b> cost from start</span><span><b>h(n)</b> Manhattan estimate to goal</span></div></div>
+            <div class="method-insight"><span class="insight-label">IN THE CODE · <code>astar.py</code></span><pre><code>tentative_g = current_g + 1
+h_score = manhattan_distance(neighbor, goal)
+f_score = tentative_g + h_score</code></pre><p>The priority queue considers both the cost so far and the estimated distance remaining.</p></div>
+          </div>
+        </article>
+        <div class="methods-closing reveal"><span class="tiny-heading">WHAT STAYS CONSTANT</span><p>Every implementation searches the <em>same walkable terrain</em>, follows the same four-directional movement rules, uses unit movement cost, and works with the same start–goal scenarios. Only the search strategy differs.</p></div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="container footer-layout"><div><strong>AOA<span class="mark-dot">.</span></strong><span>CMSC 170 · INTRODUCTION TO ARTIFICIAL INTELLIGENCE</span></div><a href="#top">Back to top ↑</a></div></footer>
+</body>
+</html>
