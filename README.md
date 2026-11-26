@@ -152,11 +152,14 @@ cmsc170-ai-project/
 │   └── test_metrics.py
 │
 ├── results/
-│   ├── initial_results.csv
-│   └── figures/
+│   ├── results.csv
+│   ├── summary.csv
+|   └── figures/
 │
 ├── docs/
 │   ├── task_log.md
+│   ├── index.html     
+│   └── images/
 │
 │
 ├── .gitignore
